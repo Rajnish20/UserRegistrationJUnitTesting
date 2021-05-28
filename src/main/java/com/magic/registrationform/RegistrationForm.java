@@ -6,38 +6,37 @@ import java.util.regex.Pattern;
 
 public class RegistrationForm {
 
+    private static final String nameRegexPatter = "^[A-Z][a-z]{2,}";
+    private static final String mobileNoRegexPattern = "\\d{2} \\d{10}";
+    private static final String emailRegexPattern = "^[A-Za-z0-9-\\+]+(\\.[A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+?(\\.[A-Za-z0-9]+)?(\\.[A-Za-z]{2,})$";
+    private static final String passwordRegexPattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*-+=()]).{8,}$";
 
     public boolean validateFirstName(String firstName) {
-        String regex = "^[A-Z][a-z]{3,}";
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(nameRegexPatter);
         Matcher matcher = pattern.matcher(firstName);
         return matcher.matches();
     }
 
     public boolean validateLastName(String lastName) {
-        String regex = "^[A-Z][a-z]{3,}";
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(nameRegexPatter);
         Matcher matcher = pattern.matcher(lastName);
         return matcher.matches();
     }
 
     public boolean validateMobileNo(String mobileNo) {
-        String regex = "\\d{2} \\d{10}";
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(mobileNoRegexPattern);
         Matcher matcher = pattern.matcher(mobileNo);
         return matcher.matches();
     }
 
     public boolean validateEmailId(String emailId) {
-        String regex = "^[A-Za-z0-9-\\+]+(\\.[A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+?(\\.[A-Za-z0-9]+)?(\\.[A-Za-z]{2,})$";
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(emailRegexPattern);
         Matcher matcher = pattern.matcher(emailId);
         return matcher.matches();
     }
 
     public boolean validatePassword(String password) {
-        String regex = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*-+=()]).{8,}$";
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(passwordRegexPattern);
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
