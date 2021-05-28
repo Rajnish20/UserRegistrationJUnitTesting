@@ -1,0 +1,2 @@
+com/magic/registrationform/RegistrationForm.java
+ com.magic.registrationform.RegistrationForm
