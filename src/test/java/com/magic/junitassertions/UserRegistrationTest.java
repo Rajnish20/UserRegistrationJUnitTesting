@@ -1,189 +1,177 @@
 package com.magic.junitassertions;
 
+import com.magic.exception.UserRegistrationException;
 import com.magic.registrationform.RegistrationForm;
 
-import org.junit.Assert;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 
 public class UserRegistrationTest {
 
 
     @Test
-    public void givenFirstName_whenProper_ShouldReturnTrue() {
+    public void givenName_WhenProper_ShouldReturnTrue() throws UserRegistrationException {
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateFirstName("Daniel");
-        Assertions.assertTrue(result);
+        boolean result = registrationForm.validateName("Daniel");
+        Assert.assertTrue(result);
+
     }
 
     @Test
-    public void givenFirstName_whenShort_ShouldReturnFalse()
-    {
+    public void givenName_WhenShort_ShouldThrowEnteredShortException() {
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateFirstName("Da");
-        Assertions.assertFalse(result);
+        try {
+            registrationForm.validateName("Ra");
+        } catch (UserRegistrationException e) {
+            Assert.assertEquals(UserRegistrationException.ExceptionType.Entered_Short, e.type);
+        }
     }
 
     @Test
-    public void givenFirstName_WhenWithSplChar_ShouldReturnFalse()
-    {
+    public void givenName_WhenNull_ShouldThrowEnteredNullException() {
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateFirstName("R@jnish");
-        Assertions.assertFalse(result);
+        try {
+            registrationForm.validateName(null);
+        } catch (UserRegistrationException e) {
+            Assert.assertEquals(UserRegistrationException.ExceptionType.Entered_Null, e.type);
+        }
     }
 
     @Test
-    public void givenLastName_whenProper_ShouldReturnTrue() {
+    public void givenName_WhenEmpty_ShouldThrowEnteredShortException() {
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateFirstName("Clark");
-        Assertions.assertTrue(result);
+        try {
+            registrationForm.validateName("");
+        } catch (UserRegistrationException e) {
+            Assert.assertEquals(UserRegistrationException.ExceptionType.Entered_Empty, e.type);
+        }
     }
 
     @Test
-    public void givenLastName_whenShort_ShouldReturnFalse()
-    {
+    public void givenName_WhenWithDigits_ShouldThrowEnteredInvalidException() {
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateFirstName("Cl");
-        Assertions.assertFalse(result);
+        try {
+            registrationForm.validateName("DAN0987");
+        } catch (UserRegistrationException e) {
+            Assert.assertEquals(UserRegistrationException.ExceptionType.Entered_INVALID, e.type);
+        }
     }
 
     @Test
-    public void givenLastName_WhenWithSplChar_ShouldReturnFalse()
-    {
-        RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateFirstName("Cl@rk");
-        Assertions.assertFalse(result);
-    }
-
-    @Test
-    public void givenMobileNumber_WhenProper_ShouldReturnTrue()
-    {
+    public void givenMobileNo_whenProper_ShouldReturnTrue() throws UserRegistrationException {
         RegistrationForm registrationForm = new RegistrationForm();
         boolean result = registrationForm.validateMobileNo("91 7838288091");
-        Assertions.assertTrue(result);
+        Assert.assertTrue(result);
     }
 
     @Test
-    public void givenMobileNumber_WhenShort_ShouldReturnFalse()
-    {
+    public void givenMobileNo_WhenShort_ShouldThrowEnteredInvalidException() {
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateMobileNo("91 7838");
-        Assertions.assertFalse(result);
+        try {
+            registrationForm.validateMobileNo("91");
+        } catch (UserRegistrationException e) {
+            Assert.assertEquals(UserRegistrationException.ExceptionType.Entered_INVALID, e.type);
+        }
     }
 
     @Test
-    public void givenMobileNumber_WhenNoExtensionIncluded_ShouldReturnFalse()
-    {
+    public void givenName_WhenWithoutExtension_ShouldThrowEnteredInvalidException() {
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateMobileNo("7838288091");
-        Assertions.assertFalse(result);
+        try {
+            registrationForm.validateMobileNo("7838288091");
+        } catch (UserRegistrationException e) {
+            Assert.assertEquals(UserRegistrationException.ExceptionType.Entered_INVALID, e.type);
+        }
     }
 
     @Test
-    public void givenMobileNumber_WhenMoreChar_ShouldReturnFalse()
-    {
+    public void givenName_WhenWithoutSpace_ShouldThrowEnteredInvalidException() {
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateMobileNo("91 783828809110");
-        Assertions.assertFalse(result);
+        try {
+            registrationForm.validateMobileNo("917838288091");
+        } catch (UserRegistrationException e) {
+            Assert.assertEquals(UserRegistrationException.ExceptionType.Entered_INVALID, e.type);
+        }
     }
 
     @Test
-    public void givenMobileNumber_WhenWithSplChar_ShouldReturnFalse()
-    {
+    public void givenPassword_WhenProper_ShouldReturnTrue() throws UserRegistrationException {
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateMobileNo("+91 7838288091");
-        Assertions.assertFalse(result);
+        boolean result = registrationForm.validatePassword("D@niel9876");
+        Assert.assertTrue(result);
+
     }
 
     @Test
-    public void givenEmailId_WhenProper_ShouldReturnTrue()
-    {
+    public void givenPassword_WhenShort_ShouldThrowEnteredShortException() {
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateEmailId("rajnisher20@gmail.com");
-        Assertions.assertTrue(result);
+        try {
+            registrationForm.validatePassword("R@j87");
+        } catch (UserRegistrationException e) {
+            Assert.assertEquals(UserRegistrationException.ExceptionType.Entered_Short, e.type);
+        }
     }
 
     @Test
-    public void givenEmailId_WhenCorrectSymbolNotPresent_ShouldReturnFalse()
-    {
+    public void givenPassword_WhenInvalid_ShouldThrowEnteredInvalidException() {
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateEmailId("rajnisher20gmail.com");
-        Assertions.assertFalse(result);
+        try {
+            registrationForm.validatePassword("daniel09988");
+        } catch (UserRegistrationException e) {
+            Assert.assertEquals(UserRegistrationException.ExceptionType.Entered_INVALID, e.type);
+        }
     }
 
     @Test
-    public void givenEmailId_WhenLastTldShort_ShouldReturnFalse()
-    {
+    public void givenEmailId_WhenProper_ShouldReturnTrue() throws UserRegistrationException{
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateEmailId("rajnisher20@gmail.com.i");
-        Assertions.assertFalse(result);
+        boolean result = registrationForm.validateEmail("rajnish.sahu@magicedtech.com");
+        Assert.assertTrue(result);
     }
 
     @Test
-    public void givenEmailId_WhenDigitAlongWithTld_ShouldReturnFalse()
-    {
+    public void givenEmailId_WhenMultipleTld_ShouldThrowEnteredInvalidException(){
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateEmailId("rajnisher20@gmail.com.1a");
-        Assertions.assertFalse(result);
+        try{
+            registrationForm.validateEmail("daniel.com.au");
+        }catch (UserRegistrationException e)
+        {
+            Assert.assertEquals(UserRegistrationException.ExceptionType.Entered_INVALID,e.type);
+        }
     }
 
     @Test
-    public void givenEmailId_WhenMultipleTld_ShouldReturnFalse()
-    {
+    public void givenEmailId_WhenDigitAlongWithTld_ShouldThrowEnteredInvalidException(){
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validateEmailId("rajnisher20@gmail.com.aa.au");
-        Assertions.assertFalse(result);
+        try{
+            registrationForm.validateEmail("rajnisher20@gmail.com.1a");
+        }catch (UserRegistrationException e)
+        {
+            Assert.assertEquals(UserRegistrationException.ExceptionType.Entered_INVALID,e.type);
+        }
     }
 
     @Test
-    public void givenPassword_WhenProper_ShouldReturnTrue()
-    {
+    public void givenEmailId_WhenLastTldShort_ShouldThrowEnteredInvalidException() {
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validatePassword("P@ssword20");
-        Assertions.assertTrue(result);
+        try {
+            registrationForm.validateEmail("rajnisher20@gmail.com.i");
+        } catch (UserRegistrationException e) {
+            Assert.assertEquals(UserRegistrationException.ExceptionType.Entered_INVALID, e.type);
+        }
     }
 
     @Test
-    public void givenPassword_WhenShort_ShouldReturnFalse()
-    {
+    public void givenEmailId_WhenCorrectSymbolNotPresent_ShouldThrowEnteredInvalidException() {
         RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validatePassword("P@ss20");
-        Assertions.assertFalse(result);
+        try {
+            registrationForm.validateEmail("daniel20gmail.com");
+        } catch (UserRegistrationException e) {
+            Assert.assertEquals(UserRegistrationException.ExceptionType.Entered_INVALID, e.type);
+        }
     }
-
-    @Test
-    public void givenPassword_WhenNoUpperCase_ShouldReturnFalse()
-    {
-        RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validatePassword("p@ssword20");
-        Assertions.assertFalse(result);
-    }
-
-    @Test
-    public void givenPassword_WhenNoSplChar_ShouldReturnFalse()
-    {
-        RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validatePassword("Password20");
-        Assertions.assertFalse(result);
-    }
-
-    @Test
-    public void givenPassword_WhenNoNumeric_ShouldReturnFalse()
-    {
-        RegistrationForm registrationForm = new RegistrationForm();
-        boolean result = registrationForm.validatePassword("P@ssword");
-        Assertions.assertFalse(result);
-    }
-
-
-
-
-
-
-
-
 
 
 

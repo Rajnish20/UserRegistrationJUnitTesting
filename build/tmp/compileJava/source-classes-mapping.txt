@@ -1,2 +1,5 @@
+com/magic/exception/UserRegistrationException.java
+ com.magic.exception.UserRegistrationException
+ com.magic.exception.UserRegistrationException$ExceptionType
 com/magic/registrationform/RegistrationForm.java
  com.magic.registrationform.RegistrationForm
